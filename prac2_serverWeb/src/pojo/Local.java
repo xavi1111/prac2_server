@@ -26,7 +26,7 @@ public class Local {
 		ResultSet ors = null;
 		try {
 			Statement statement = dbConnection.createStatement();
-			ors = statement.executeQuery("select * from local where local.codiLocal = '" + codiLocal + "'");
+			ors = statement.executeQuery("select * from local where local.codilocal = '" + codiLocal + "'");
 			if(ors.next()) {
 				fillObject(ors);
 				ors.close();

@@ -54,6 +54,18 @@ public class Incidencia {
 		}
 	}
 
+	public boolean addItem() throws SQLException {
+		try {
+			Statement statement = dbConnection.createStatement();
+			statement.executeUpdate("INSERT INTO incidencia " + "VALUES (" + this.dataHora + ", " +this.codiTipusIncidencia + ", " + this.idRegistre + ", " + this.nomTaula + ")");
+			return true;
+		} catch (SQLException e) {
+		    System.err.println(e.getMessage());
+		    return false;
+		}
+	}
+	
+	
 	public Long getIdIncidencia() {
 		return idIncidencia;
 	}

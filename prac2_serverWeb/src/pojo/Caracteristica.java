@@ -1,6 +1,7 @@
 package pojo;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -44,12 +45,12 @@ public class Caracteristica {
 	
 	private void fillObject(ResultSet ors) {
 		try {
-			this.codiCaracteristica = ors.getLong("codiCaracteristica");
-			this.nomCaracteristicaCA = ors.getString("nomCaracteristicaCA");
-			this.nomCaracteristicaES = ors.getString("nomCaracteristicaES");
-			this.nomCaracteristicaEN = ors.getString("nomCaracteristicaEN");
+			this.codiCaracteristica = ors.getLong("codicaracteristica");
+			this.nomCaracteristicaCA = ors.getString("nomcaracteristicaca");
+			this.nomCaracteristicaES = ors.getString("nomcaracteristicaes");
+			this.nomCaracteristicaEN = ors.getString("nomcaracteristicaen");
 			this.tipo = ors.getInt("tipo");
-			this.codiNivell = ors.getLong("codiNivell");
+			this.codiNivell = ors.getLong("codinivell");
 		}catch(Exception e) {
 			//TODO a veure que fem
 		}
@@ -101,5 +102,21 @@ public class Caracteristica {
 
 	public void setCodiNivell(Long codiNivell) {
 		this.codiNivell = codiNivell;
+	}
+	
+	public boolean addItem() {
+		try {
+			String query = "INSERT INTO caracteristica(nomcaracteristicaca, nomcaracteristicaes, nomcaracteristicaen, tipo, codinivell) VALUES(?, ?, ?, ?, ?)";
+			PreparedStatement pst = dbConnection.prepareStatement(query);
+	        pst.setString(1, getNomCaracteristicaCA());
+	        pst.setString(2, getNomCaracteristicaES());
+	        pst.setString(3, getNomCaracteristicaEN());
+	        pst.setInt(4, getTipo());
+	        pst.setLong(5, getCodiNivell());
+	        pst.executeUpdate();
+			return true;
+		}catch(Exception e) {
+			return false;
+		}
 	}
 }

@@ -2,6 +2,7 @@ package pojo;
 
 import java.sql.Statement;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -46,13 +47,13 @@ public class Local {
 
 	private void fillObject(ResultSet ors) {
 		try {
-			this.codiLocal = ors.getLong("codiLocal");
-			this.codiTipoLocal = ors.getLong("codiTipoLocal");
-			this.codiCarrer = ors.getLong("codiCarrer");
-			this.nomCarrer = ors.getString("nomCarrer");
-			this.nomVia = ors.getString("nomVia");
+			this.codiLocal = ors.getLong("codilocal");
+			this.codiTipoLocal = ors.getLong("coditipoLocal");
+			this.codiCarrer = ors.getLong("codicarrer");
+			this.nomCarrer = ors.getString("nomcarrer");
+			this.nomVia = ors.getString("nomvia");
 			this.numero = ors.getLong("numero");
-			this.nomVia = ors.getString("nomLocal");
+			this.nomVia = ors.getString("nomlocal");
 			this.nomVia = ors.getString("observacions");
 			this.nomVia = ors.getString("verificat");
 		}catch(Exception e) {
@@ -131,5 +132,24 @@ public class Local {
 
 	public void setVerificat(String verificat) {
 		this.verificat = verificat;
+	}
+	
+	public boolean addItem() {
+		try {
+			String query = "INSERT INTO local(coditipolocal, codicarrer, nomcarrer, nomvia, numero, nomlocal, observacions, verificat) VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
+			PreparedStatement pst = dbConnection.prepareStatement(query);
+	        pst.setLong(1, getCodiTipoLocal());
+	        pst.setLong(2, getCodiCarrer());
+	        pst.setString(3, getNomCarrer());
+	        pst.setString(4, getNomVia());
+	        pst.setLong(5, getNumero());
+	        pst.setString(6, getNomLocal());
+	        pst.setString(7, getObservacions());
+	        pst.setString(8, getVerificat());
+	        pst.executeUpdate();
+			return true;
+		}catch(Exception e) {
+			return false;
+		}
 	}
 }

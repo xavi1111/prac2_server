@@ -1,6 +1,7 @@
 package pojo;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -20,7 +21,7 @@ public class Nivell {
 		ResultSet ors = null;
 		try {
 			Statement statement = dbConnection.createStatement();
-			ors = statement.executeQuery("select * from Nivell where Nivell.codiNivell = '" + codiNivell + "'");
+			ors = statement.executeQuery("select * from Nivell where nivell.codinivell = '" + codiNivell + "'");
 			if(ors.next()) {
 				fillObject(ors);
 				ors.close();
@@ -40,10 +41,10 @@ public class Nivell {
 
 	private void fillObject(ResultSet ors) {
 		try {
-			this.codiNivell = ors.getLong("codiNivell");
-			this.nomNivellCA = ors.getString("nomNivellCA");
-			this.nomNivellES = ors.getString("nomNivellES");
-			this.nomNivellEN = ors.getString("nomNivellEN");
+			this.codiNivell = ors.getLong("codinivell");
+			this.nomNivellCA = ors.getString("nomnivellca");
+			this.nomNivellES = ors.getString("nomnivelles");
+			this.nomNivellEN = ors.getString("nomnivellen");
 		}catch(Exception e) {
 			//TODO a veure que fem
 		}
@@ -57,7 +58,7 @@ public class Nivell {
 		this.codiNivell = codiNivell;
 	}
 
-	public String getNomiNivellCA() {
+	public String getNomNivellCA() {
 		return nomNivellCA;
 	}
 
@@ -65,7 +66,7 @@ public class Nivell {
 		this.nomNivellCA = nomNivellCA;
 	}
 
-	public String getCodiNivellES() {
+	public String getNomNivellES() {
 		return nomNivellES;
 	}
 
@@ -73,11 +74,26 @@ public class Nivell {
 		this.nomNivellES = nomNivellES;
 	}
 
-	public String getCodiNivellEN() {
+	public String getNomNivellEN() {
 		return nomNivellEN;
 	}
 
 	public void setNomNivellEN(String nomNivellEN) {
 		this.nomNivellEN = nomNivellEN;
+	}
+	
+	public boolean addItem() {
+		try {
+			String query = "INSERT INTO nivell(nomnivellca, nomnivelles, nomnivellen) VALUES(?, ?, ?)";
+			PreparedStatement pst = dbConnection.prepareStatement(query);
+	        pst.setString(1, getNomNivellCA());
+	        pst.setString(2, getNomNivellES());
+	        pst.setString(3, getNomNivellEN());
+	        
+	        pst.executeUpdate();
+			return true;
+		}catch(Exception e) {
+			return false;
+		}
 	}
 }

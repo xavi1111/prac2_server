@@ -1,6 +1,7 @@
 package pojo;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -43,9 +44,9 @@ public class Accessibilitat {
 	
 	private void fillObject(ResultSet ors) {
 		try {
-			this.codiAccessibilitat = ors.getLong("codiAccessibilitat");
-			this.codiLocal = ors.getLong("codiLocal");
-			this.codiCaracteristica = ors.getLong("codiCaracteristica");
+			this.codiAccessibilitat = ors.getLong("codiaccessibilitat");
+			this.codiLocal = ors.getLong("codilocal");
+			this.codiCaracteristica = ors.getLong("codicaracteristica");
 			this.valor = ors.getLong("valor");
 			this.verificat = ors.getString("verificat");
 		}catch(Exception e) {
@@ -92,4 +93,19 @@ public class Accessibilitat {
 	public void setVerificat(String verificat) {
 		this.verificat = verificat;
 	}	
+	
+	public boolean addItem() {
+		try {
+			String query = "INSERT INTO accessibilitat(codilocal, codicaracteristica, valor, verificat) VALUES(?, ?, ?, ?)";
+			PreparedStatement pst = dbConnection.prepareStatement(query);
+	        pst.setLong(1, getCodiLocal());
+	        pst.setLong(2, getCodiCaracteristica());
+	        pst.setLong(3, getValor());
+	        pst.setString(4, getVerificat());
+	        pst.executeUpdate();
+			return true;
+		}catch(Exception e) {
+			return false;
+		}
+	}
 }

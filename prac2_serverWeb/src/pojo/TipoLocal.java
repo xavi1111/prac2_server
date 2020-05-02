@@ -1,6 +1,7 @@
 package pojo;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -20,7 +21,7 @@ public class TipoLocal {
 		ResultSet ors = null;
 		try {
 			Statement statement = dbConnection.createStatement();
-			ors = statement.executeQuery("select * from TipoLocal where TipoLocal.codiTipoLocal = '" + codiTipoLocal + "'");
+			ors = statement.executeQuery("select * from TipoLocal where tipolocal.coditipolocal = '" + codiTipoLocal + "'");
 			if(ors.next()) {
 				fillObject(ors);
 				ors.close();
@@ -39,10 +40,10 @@ public class TipoLocal {
 
 	private void fillObject(ResultSet ors) {
 		try {
-			this.codiTipoLocal = ors.getLong("codiTipoLocal");
-			this.nomTipoLocalCA = ors.getString("nomTipoLocalCA");
-			this.nomTipoLocalES = ors.getString("nomTipoLocalES");
-			this.nomTipoLocalEN = ors.getString("nomTipoLocalEN");
+			this.codiTipoLocal = ors.getLong("coditipolocal");
+			this.nomTipoLocalCA = ors.getString("nomtipolocalca");
+			this.nomTipoLocalES = ors.getString("nomtipolocales");
+			this.nomTipoLocalEN = ors.getString("nomtipolocalen");
 		}catch(Exception e) {
 			//TODO a veure que fem
 		}
@@ -78,5 +79,19 @@ public class TipoLocal {
 
 	public void setNomTipoLocalEN(String nomTipoLocalEN) {
 		this.nomTipoLocalEN = nomTipoLocalEN;
+	}
+	
+	public boolean addItem() {
+		try {
+			String query = "INSERT INTO tipolocal(nomtipolocalca, nomtipolocales, nomtipolocalen) VALUES(?, ?, ?)";
+			PreparedStatement pst = dbConnection.prepareStatement(query);
+	        pst.setString(1, getNomTipoLocalCA());
+	        pst.setString(2, getNomTipoLocalES());
+	        pst.setString(3, getNomTipoLocalEN());
+	        pst.executeUpdate();
+			return true;
+		}catch(Exception e) {
+			return false;
+		}
 	}
 }

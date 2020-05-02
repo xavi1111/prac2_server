@@ -5,6 +5,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Accessibilitat {
 	
@@ -107,5 +109,12 @@ public class Accessibilitat {
 		}catch(Exception e) {
 			return false;
 		}
+	}
+
+	public List<Accessibilitat> getList(Long codiAccessibilitat, Long codiLocal, Long codiCaracteristica, Long valor,String verificat) {
+		List<Accessibilitat> list = new ArrayList<Accessibilitat>();
+		//TODO mirar si fer-ho amb storeds o que
+		return list;
+		
 	}
 }

@@ -172,7 +172,40 @@ public class Local {
 	        pst.setString(8, getVerificat());
 	        pst.executeUpdate();
 			return true;
-		}catch(Exception e) {
+		} catch(Exception e) {
+			return false;
+		}
+	}
+	
+	public boolean update() {
+		try {
+			String query = "UPDATE local  "
+					+ "SET coditipolocal=?, codicarrer=?, nomcarrer=?, nomvia=?, numero=?, nomlocal=?, observacions=?, verificat=?"
+					+ "WHERE local.codilocal=?";
+			PreparedStatement pst = dbConnection.prepareStatement(query);
+			pst.setLong(1, getCodiTipoLocal());
+		    pst.setLong(2, getCodiCarrer());
+		    pst.setString(3, getNomCarrer());
+	        pst.setString(4, getNomVia());
+	        pst.setLong(5, getNumero());
+	        pst.setString(6, getNomLocal());
+	        pst.setString(7, getObservacions());
+	        pst.setString(8, getVerificat());
+	        pst.setLong(9, getCodiLocal());
+	        pst.executeUpdate();
+			return true;
+		} catch(Exception e) {
+			return false;
+		}
+	}
+	
+	public boolean delete() {
+		try {
+			String query = "DELETE CASCADE FROM local WHERE local.codilocal=?";
+			PreparedStatement pst = dbConnection.prepareStatement(query);
+			pst.setLong(1, getCodiLocal());
+			return true;
+		} catch (Exception e) {
 			return false;
 		}
 	}

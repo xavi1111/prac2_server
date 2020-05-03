@@ -23,11 +23,35 @@ public class Local {
 		this.dbConnection = dbConnection;
 	}
 	
-	public Boolean LoadItem(Long codiNivell) {
+	public Boolean loadItem(Long codiTipoLocal, String nomLocal) {
 		ResultSet ors = null;
 		try {
 			Statement statement = dbConnection.createStatement();
-			ors = statement.executeQuery("select * from local where local.codilocal = '" + codiLocal + "'");
+			ors = statement.executeQuery("select * from local where local.coditipolocal = '" + codiTipoLocal + "'"
+							+ "and local.nomlocal = '" + nomLocal + "'");
+			if(ors.next()) {
+				fillObject(ors);
+				ors.close();
+				return true;
+			}else
+				return false;
+		}catch(Exception e) {
+			//TODO a veure que fem
+			try {
+				ors.close();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+			return false;
+		}
+	}
+	
+	public Boolean loadItem() {
+		ResultSet ors = null;
+		try {
+			Statement statement = dbConnection.createStatement();
+			ors = statement.executeQuery("select * from local where local.coditipolocal = '" + codiTipoLocal + "'"
+							+ "and local.nomlocal = '" + nomLocal + "'");
 			if(ors.next()) {
 				fillObject(ors);
 				ors.close();

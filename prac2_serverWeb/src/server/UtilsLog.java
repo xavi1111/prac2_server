@@ -15,13 +15,13 @@ public class UtilsLog {
 		this.dbConnection = dbLogConnection;
 	}
 	
-	public void registrarLinea(Local local, Integer tipusIncidencia) throws SQLException {
-			Incidencia dbLog = new Incidencia(dbConnection);
-			dbLog.setCodiTipusIncidencia(tipusIncidencia);
-			Timestamp timestamp = new Timestamp(System.currentTimeMillis());
-			dbLog.setDataHora(timestamp);
-			dbLog.setIdRegistre(local.getCodiLocal());
-			dbLog.setNomTaula("Local");
-			dbLog.addItem();
+	public void registrarLinea(Long primaryKey, Integer tipusIncidencia, String nomTaula) throws SQLException {
+		Incidencia dbLog = new Incidencia(dbConnection);
+		dbLog.setCodiTipusIncidencia(tipusIncidencia);
+		Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+		dbLog.setDataHora(timestamp);
+		dbLog.setIdRegistre(primaryKey);
+		dbLog.setNomTaula(nomTaula);
+		dbLog.addItem();
 	}
 }

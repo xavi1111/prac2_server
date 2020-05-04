@@ -1,50 +1,62 @@
 package server;
 
 import java.sql.Connection;
+import java.sql.SQLException;
 
 import pojo.*;
+
+import server.*;
 
 public class UtilsLocal {
 	
 	private Connection dbConnection;
 	private Connection dbLogConnection;
 	
-	private Long alta = 1L;
-	private Long modif = 2L;
-	private Long baixa = 3L;
+	private Integer alta = 1;
+	private Integer modif = 2;
+	private Integer baixa = 3;
+	private String nomTaula = "Local";
 	
 	public UtilsLocal(Connection dbConnection, Connection dbLogConnection) {
 		this.dbConnection = dbConnection;
 		this.dbLogConnection = dbLogConnection;
 	}
 	
-	public boolean altaLocal(Local local) {
+	public Local altaLocal(Local local) throws SQLException {
+		UtilsLog log = new UtilsLog(dbLogConnection);
+		
 		if(local.loadItem())
-			return false;
+			return null;
 		else
 		{
 			local.addItem();
-			//TODO: Alta registre log.
-			return true;
+			local.loadItem();
+			log.registrarLog(local.getCodiLocal(), alta, nomTaula);
+			return local;
 		}
 	}
 	
-	public boolean modificacioLocal(Local local) {
+	public Local modificacioLocal(Local local) throws SQLException {
+		UtilsLog log = new UtilsLog(dbLogConnection);
+		
 		if(!local.loadItem())
-			return false;
+			return null;
 		else {
 			local.update();
-			//TODO: Alta registre log.
-			return true;
+			local.loadItem();
+			log.registrarLog(local.getCodiLocal(), modif, nomTaula);
+			return local;
 		}
 	}
 	
-	public boolean baixaLocal(Local local) {
+	public boolean baixaLocal(Local local) throws SQLException {
+		UtilsLog log = new UtilsLog(dbLogConnection);
+		
 		if(!local.loadItem())
 			return false;
 		else {
 			local.delete();
-			//TODO: Alta registre log.
+			log.registrarLog(null, baixa, nomTaula);
 			return true;
 		}
 	}

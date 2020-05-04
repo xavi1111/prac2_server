@@ -15,7 +15,7 @@ public class UtilsLog {
 		this.dbConnection = dbLogConnection;
 	}
 	
-	public void registrarLinea(Long primaryKey, Integer tipusIncidencia, String nomTaula) throws SQLException {
+	public void registrarLog(Long primaryKey, Integer tipusIncidencia, String nomTaula) throws SQLException {
 		Incidencia dbLog = new Incidencia(dbConnection);
 		dbLog.setCodiTipusIncidencia(tipusIncidencia);
 		Timestamp timestamp = new Timestamp(System.currentTimeMillis());

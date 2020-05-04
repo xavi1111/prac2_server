@@ -180,18 +180,16 @@ public class Local {
 	public boolean update() {
 		try {
 			String query = "UPDATE local  "
-					+ "SET coditipolocal=?, codicarrer=?, nomcarrer=?, nomvia=?, numero=?, nomlocal=?, observacions=?, verificat=?"
+					+ "SET codicarrer=?, nomcarrer=?, nomvia=?, numero=?, observacions=?, verificat=?"
 					+ "WHERE local.codilocal=?";
 			PreparedStatement pst = dbConnection.prepareStatement(query);
-			pst.setLong(1, getCodiTipoLocal());
-		    pst.setLong(2, getCodiCarrer());
-		    pst.setString(3, getNomCarrer());
-	        pst.setString(4, getNomVia());
-	        pst.setLong(5, getNumero());
-	        pst.setString(6, getNomLocal());
-	        pst.setString(7, getObservacions());
-	        pst.setString(8, getVerificat());
-	        pst.setLong(9, getCodiLocal());
+		    pst.setLong(1, getCodiCarrer());
+		    pst.setString(2, getNomCarrer());
+	        pst.setString(3, getNomVia());
+	        pst.setLong(4, getNumero());
+	        pst.setString(5, getObservacions());
+	        pst.setString(6, getVerificat());
+	        pst.setLong(7, getCodiLocal());
 	        pst.executeUpdate();
 			return true;
 		} catch(Exception e) {

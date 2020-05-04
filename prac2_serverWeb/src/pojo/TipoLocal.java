@@ -17,11 +17,32 @@ public class TipoLocal {
 		this.dbConnection = dbConnection;
 	}	
 	
-	public Boolean LoadItem(Long codiTipoLocal) {
+	public Boolean LoadItem(String nomTipoLocalCA) {
 		ResultSet ors = null;
 		try {
 			Statement statement = dbConnection.createStatement();
-			ors = statement.executeQuery("select * from TipoLocal where tipolocal.coditipolocal = '" + codiTipoLocal + "'");
+			ors = statement.executeQuery("SELECT * FROM TipoLocal WHERE tipolocal.nomtipolocalCA = '" + nomTipoLocalCA + "'");
+			if(ors.next()) {
+				fillObject(ors);
+				ors.close();
+				return true;
+			}else
+				return false;
+		}catch(Exception e) {
+			try {
+				ors.close();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+			return false;
+		}
+	}
+	
+	public Boolean LoadItem() {
+		ResultSet ors = null;
+		try {
+			Statement statement = dbConnection.createStatement();
+			ors = statement.executeQuery("SELECT * FROM TipoLocal WHERE tipolocal.coditipolocal = '" + codiTipoLocal + "'");
 			if(ors.next()) {
 				fillObject(ors);
 				ors.close();
@@ -38,6 +59,7 @@ public class TipoLocal {
 		}
 	}
 
+	
 	private void fillObject(ResultSet ors) {
 		try {
 			this.codiTipoLocal = ors.getLong("coditipolocal");

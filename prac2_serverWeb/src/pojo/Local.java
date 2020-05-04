@@ -27,8 +27,8 @@ public class Local {
 		ResultSet ors = null;
 		try {
 			Statement statement = dbConnection.createStatement();
-			ors = statement.executeQuery("select * from local where local.coditipolocal = '" + codiTipoLocal + "'"
-							+ "and local.nomlocal = '" + nomLocal + "'");
+			ors = statement.executeQuery("SELECT * FROM local WHERE local.coditipolocal = '" + codiTipoLocal + "'"
+							+ "AND local.nomlocal = '" + nomLocal + "'");
 			if(ors.next()) {
 				fillObject(ors);
 				ors.close();
@@ -50,7 +50,7 @@ public class Local {
 		ResultSet ors = null;
 		try {
 			Statement statement = dbConnection.createStatement();
-			ors = statement.executeQuery("select * from local where local.codilocal = '" + codiLocal + "'");
+			ors = statement.executeQuery("SELECT * FROM local WHERE local.codilocal = '" + codiLocal + "'");
 			if(ors.next()) {
 				fillObject(ors);
 				ors.close();

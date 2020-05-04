@@ -18,11 +18,33 @@ public class TipusIncidencia {
 		this.dbConnection = dbConnection;
 	}
 	
-	public boolean loadItem(Long codiTipusIncidencia) {
+	public boolean loadItem(String descripcio) {
 		ResultSet ors = null;
 		try {
 			Statement statement = dbConnection.createStatement();
-			ors = statement.executeQuery("select * from tipusIncidencia where tipusincidencia.codiTipusIncidencia = '" + codiTipusIncidencia + "'");
+			ors = statement.executeQuery("SELECT * FROM tipusIncidencia WHERE tipusincidencia.descripcio = '" + descripcio + "'");
+			if(ors.next()) {
+				fillObject(ors);
+				ors.close();
+				return true;
+			}else
+				return false;
+		}catch(Exception e) {
+			//TODO a veure que fem
+			try {
+				ors.close();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+			return false;
+		}
+	}
+	
+	public boolean loadItem() {
+		ResultSet ors = null;
+		try {
+			Statement statement = dbConnection.createStatement();
+			ors = statement.executeQuery("SELECT * FROM tipusIncidencia WHERE tipusincidencia.codiTipusIncidencia = '" + codiTipusIncidencia + "'");
 			if(ors.next()) {
 				fillObject(ors);
 				ors.close();

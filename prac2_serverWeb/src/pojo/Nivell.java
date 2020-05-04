@@ -17,11 +17,33 @@ public class Nivell {
 		this.dbConnection = dbConnection;
 	}
 	
-	public Boolean LoadItem(Long codiNivell) {
+	public Boolean LoadItem(String nomNivellCA) {
 		ResultSet ors = null;
 		try {
 			Statement statement = dbConnection.createStatement();
-			ors = statement.executeQuery("select * from Nivell where nivell.codinivell = '" + codiNivell + "'");
+			ors = statement.executeQuery("SELECT * FROM Nivell WHERE nivell.nomnivellca = '" + nomNivellCA + "'");
+			if(ors.next()) {
+				fillObject(ors);
+				ors.close();
+				return true;
+			}else
+				return false;
+		}catch(Exception e) {
+			//TODO a veure que fem
+			try {
+				ors.close();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+			return false;
+		}
+	}
+	
+	public Boolean LoadItem() {
+		ResultSet ors = null;
+		try {
+			Statement statement = dbConnection.createStatement();
+			ors = statement.executeQuery("SELECT * FROM Nivell WHERE nivell.codinivell = '" + codiNivell + "'");
 			if(ors.next()) {
 				fillObject(ors);
 				ors.close();

@@ -22,11 +22,33 @@ public class Accessibilitat {
 		this.dbConnection = dbConnection;
 	}
 	
-	public Boolean loadItem(Long codiAccessibilitat) {
+	public Boolean loadItem(Long codiLocal, Long codiAccessibilitat) {
 		ResultSet ors = null;
 		try {
 			Statement statement = dbConnection.createStatement();
-			ors = statement.executeQuery("select * from accessibilitat where accessibilitat.codiaccessibilitat = '" + codiAccessibilitat + "'");
+			ors = statement.executeQuery("SELECT * FROM accessibilitat WHERE accessibilitat.codilocal = '" + codiLocal + "' AND accessibilitat.codiaccessibilitat = '" + codiAccessibilitat + "'");
+			if(ors.next()) {
+				fillObject(ors);
+				ors.close();
+				return true;
+			}else
+				return false;
+		}catch(Exception e) {
+			//TODO a veure que fem
+			try {
+				ors.close();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+			return false;
+		}
+	}
+	
+	public Boolean loadItem() {
+		ResultSet ors = null;
+		try {
+			Statement statement = dbConnection.createStatement();
+			ors = statement.executeQuery("SELECT * FROM accessibilitat WHERE accessibilitat.codiaccessibilitat = '" + codiAccessibilitat + "'");
 			if(ors.next()) {
 				fillObject(ors);
 				ors.close();
@@ -110,7 +132,34 @@ public class Accessibilitat {
 			return false;
 		}
 	}
-
+	
+	public boolean update() {
+		try {
+			String query = "UPDATE accessibilitat  "
+					+ "SET valor=?, verificat=?"
+					+ "WHERE acessibilitat.codiaccessibilitat=? ";
+			PreparedStatement pst = dbConnection.prepareStatement(query);
+		    pst.setLong(1, getValor());
+		    pst.setString(2, getVerificat());
+		    pst.setLong(3, getCodiAccessibilitat());
+	        pst.executeUpdate();
+			return true;
+		} catch(Exception e) {
+			return false;
+		}
+	}
+	
+	public boolean delete() {
+		try {
+			String query = "DELETE FROM accessibilitat WHERE local.codiaccessibilitat=?";
+			PreparedStatement pst = dbConnection.prepareStatement(query);
+			pst.setLong(1, getCodiAccessibilitat());
+			return true;
+		} catch (Exception e) {
+			return false;
+		}
+	} 
+	
 	public List<Accessibilitat> getList(Long codiAccessibilitat, Long codiLocal, Long codiCaracteristica, Long valor,String verificat) {
 		List<Accessibilitat> list = new ArrayList<Accessibilitat>();
 		//TODO mirar si fer-ho amb storeds o que

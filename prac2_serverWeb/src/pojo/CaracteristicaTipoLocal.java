@@ -16,7 +16,29 @@ public class CaracteristicaTipoLocal {
 		this.dbConnection = dbConnection;
 	}
 	
-	public Boolean LoadItem(Long codiNivell) {
+	public Boolean LoadItem(Long codicaracteristica, Long coditipolocal) {
+		ResultSet ors = null;
+		try {
+			Statement statement = dbConnection.createStatement();
+			ors = statement.executeQuery("SELECT * FROM caracteristicatipolocal WHERE caracteristicatipolocal.codicaracteristica = '" + codicaracteristica + "' AND caracteristicatipolocal.coditipolocal = '" + coditipolocal + "'");
+			if(ors.next()) {
+				fillObject(ors);
+				ors.close();
+				return true;
+			}else
+				return false;
+		}catch(Exception e) {
+			//TODO a veure que fem
+			try {
+				ors.close();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+			return false;
+		}
+	}
+
+	public Boolean LoadItem() {
 		ResultSet ors = null;
 		try {
 			Statement statement = dbConnection.createStatement();
@@ -37,7 +59,7 @@ public class CaracteristicaTipoLocal {
 			return false;
 		}
 	}
-
+	
 	private void fillObject(ResultSet ors) {
 		try {
 			this.codicaracteristicatipolocal = ors.getLong("codicaracteristicatipolocal");

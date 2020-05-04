@@ -21,11 +21,36 @@ public class Incidencia {
 		this.dbConnection = dbConnection;
 	}
 	
-	public boolean loadItem(Long idIncidencia) {
+	public boolean loadItem(Long idRegistre, Integer codiTipusIncidencia, Timestamp dataHora, String nomTaula) {
 		ResultSet ors = null;
 		try {
 			Statement statement = dbConnection.createStatement();
-			ors = statement.executeQuery("select * from incidencia where incidencia.idIncidencia = '" + idIncidencia + "'");
+			ors = statement.executeQuery("SELECT * FROM incidencia WHERE incidencia.idRegistre = '" + idRegistre + "'"
+					+ "AND incidencia.codiTipusIncidencia = '" + codiTipusIncidencia + "'"
+					+ "AND incidencia.dataHora = '" + dataHora + "'"
+					+ "AND incidencia.nomTaula = '" + nomTaula + "'");
+			if(ors.next()) {
+				fillObject(ors);
+				ors.close();
+				return true;
+			}else
+				return false;
+		}catch(Exception e) {
+			//TODO a veure que fem
+			try {
+				ors.close();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+			return false;
+		}
+	}
+	
+	public boolean loadItem() {
+		ResultSet ors = null;
+		try {
+			Statement statement = dbConnection.createStatement();
+			ors = statement.executeQuery("SELECT * FROM incidencia WHERE incidencia.idIncidencia = '" + idIncidencia + "'");
 			if(ors.next()) {
 				fillObject(ors);
 				ors.close();

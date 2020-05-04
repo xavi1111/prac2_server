@@ -21,11 +21,33 @@ public class Caracteristica {
 		this.dbConnection = dbConnection;
 	}
 	
-	public Boolean loadItem(Long codiCaracteristica) {
+	public Boolean loadItem(String nomCaracteristicaCA) {
 		ResultSet ors = null;
 		try {
 			Statement statement = dbConnection.createStatement();
-			ors = statement.executeQuery("select * from accessibilitat where caracteristica.codicaracteristica = '" + codiCaracteristica + "'");
+			ors = statement.executeQuery("SELECT * FROM accessibilitat WHERE caracteristica.nomcaracteristicaca = '" + nomCaracteristicaCA + "'");
+			if(ors.next()) {
+				fillObject(ors);
+				ors.close();
+				return true;
+			}else
+				return false;
+		}catch(Exception e) {
+			//TODO a veure que fem
+			try {
+				ors.close();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+			return false;
+		}
+	}
+	
+	public Boolean loadItem() {
+		ResultSet ors = null;
+		try {
+			Statement statement = dbConnection.createStatement();
+			ors = statement.executeQuery("SELECT * FROM accessibilitat WHERE caracteristica.codicaracteristica = '" + codiCaracteristica + "'");
 			if(ors.next()) {
 				fillObject(ors);
 				ors.close();

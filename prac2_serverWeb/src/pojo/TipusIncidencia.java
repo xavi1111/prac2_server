@@ -1,6 +1,7 @@
 package pojo;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -62,5 +63,17 @@ public class TipusIncidencia {
 
 	public void setDescripcio(String descripcio) {
 		this.descripcio = descripcio;
+	}
+	
+	public boolean addItem() {
+		try {
+			String query = "INSERT INTO tipusIncidencia(descripcio) VALUES(?)";
+			PreparedStatement pst = dbConnection.prepareStatement(query);
+	        pst.setString(1, getDescripcio());
+	        pst.executeUpdate();
+			return true;
+		}catch(Exception e) {
+			return false;
+		}
 	}
 }

@@ -1,6 +1,7 @@
 package pojo;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -104,5 +105,20 @@ public class Incidencia {
 
 	public void setNomTaula(String nomTaula) {
 		this.nomTaula = nomTaula;
+	}
+	
+	public boolean addItem() {
+		try {
+			String query = "INSERT INTO incidencia(dataHora, codiTipusIncidencia, idRegistre, nomTaula) VALUES(?, ?, ?, ?)";
+			PreparedStatement pst = dbConnection.prepareStatement(query);
+	        pst.setTimestamp(1, getDataHora());
+	        pst.setLong(2, getCodiTipusIncidencia());
+	        pst.setLong(3, getIdRegistre());
+	        pst.setString(4, getNomTaula());
+	        pst.executeUpdate();
+			return true;
+		}catch(Exception e) {
+			return false;
+		}
 	}
 }

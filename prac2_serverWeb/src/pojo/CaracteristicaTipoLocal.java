@@ -1,6 +1,7 @@
 package pojo;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -71,6 +72,18 @@ public class CaracteristicaTipoLocal {
 		return this.coditipolocal;
 	}
 	
+	public boolean addItem() {
+		try {
+			String query = "INSERT INTO caracteristicatipolocal(codicaracteristica, coditipolocal) VALUES(?, ?)";
+			PreparedStatement pst = dbConnection.prepareStatement(query);
+	        pst.setLong(1, getCodiCaracteristica());
+	        pst.setLong(2, getCodiTipoLocal());
+	        pst.executeUpdate();
+			return true;
+		}catch(Exception e) {
+			return false;
+		}
+	}
 	
 	
 

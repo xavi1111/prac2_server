@@ -38,43 +38,93 @@ public class Dispatcher {
 	}
 	
 	@WebMethod
-	public Local altaLocal() throws Exception{
-		Local newLocal = null;
+	public Local altaLocal(Long codiTipoLocal, Long codiCarrer, String nomCarrer, String nomVia, Long numero, String nomLocal, String observacions, String verificat, Connection eAccessibleConnection) throws Exception{
+		Local newLocal = new Local(eAccessibleConnection);
+		UtilsLocal utilsLocal = new UtilsLocal(eAccessibleConnection, incidenciaConnection);
+
 		try {
+			newLocal.setCodiTipoLocal(codiTipoLocal);
+			newLocal.setCodiCarrer(codiCarrer);
+			newLocal.setNomCarrer(nomCarrer);
+			newLocal.setNomVia(nomVia);
+			newLocal.setNumero(numero);
+			newLocal.setNomLocal(nomLocal);
+			newLocal.setObservacions(observacions);
+			newLocal.setVerificat(verificat);
+			Local resultLocal = utilsLocal.altaLocal(newLocal);
+			if(resultLocal != null) {
+				return resultLocal;
+			} else {
+				//TODO CREAR MISSATGE ERROR				
+				return resultLocal;
+			}
 			
-			return newLocal;
 		}catch(Exception e) {
 			throw e;
 		}
 	}
 	
 	@WebMethod
-	public Local baixaLocal()throws Exception{
-		Local newLocal = null;
+	public boolean baixaLocal(Long codiLocal)throws Exception{
+		Local newLocal = new Local(eAccessibleConnection);
+		UtilsLocal utilsLocal = new UtilsLocal(eAccessibleConnection, incidenciaConnection);
 		try {
-			
-			return newLocal;
+			newLocal.setCodiLocal(codiLocal);
+			if(utilsLocal.baixaLocal(newLocal)) {
+				//TODO CREAR MISSATGE TOT CORRECTE	
+				return true;
+			} else {
+				//TODO CREAR MISSATGE ERROR				
+				return false;
+			}
 		}catch(Exception e) {
 			throw e;
 		}
 	}
 	
 	@WebMethod
-	public Local updateLocal()throws Exception{
-		Local newLocal = null;
+	public Local updateLocal(Long codiLocal, Long codiTipoLocal, Long codiCarrer, String nomCarrer, String nomVia, Long numero, String nomLocal, String observacions, String verificat, Connection eAccessibleConnection)throws Exception{
+		Local modifLocal = new Local(eAccessibleConnection);
+		UtilsLocal utilsLocal = new UtilsLocal(eAccessibleConnection, incidenciaConnection);
 		try {
-			
-			return newLocal;
+			modifLocal.setCodiLocal(codiLocal);
+			modifLocal.setCodiTipoLocal(codiTipoLocal);
+			modifLocal.setCodiCarrer(codiCarrer);
+			modifLocal.setNomCarrer(nomCarrer);
+			modifLocal.setNomVia(nomVia);
+			modifLocal.setNumero(numero);
+			modifLocal.setNomLocal(nomLocal);
+			modifLocal.setObservacions(observacions);
+			modifLocal.setVerificat(verificat);
+			Local resultLocal = utilsLocal.modificacioLocal(modifLocal);
+			if(resultLocal != null) {
+				//TODO CREAR MISSATGE TOT CORRECTE	
+				return resultLocal;
+			} else {
+				//TODO CREAR MISSATGE ERROR	NO EXISTEIX			
+				return resultLocal;
+			}
 		}catch(Exception e) {
 			throw e;
 		}
 	}
 	
 	@WebMethod
-	public Local verificarLocal()throws Exception{
-		Local newLocal = null;
+	public Local verificarLocal(Long codiLocal)throws Exception{
+		Local local = new Local(eAccessibleConnection);
+		UtilsLocal utilsLocal = new UtilsLocal(eAccessibleConnection, incidenciaConnection);
 		try {
-			return newLocal;
+			local.setCodiLocal(codiLocal);
+			local.loadItem();
+			local.setVerificat("S");
+			Local resultLocal = utilsLocal.modificacioLocal(local);
+			if(resultLocal != null) {
+				//TODO CREAR MISSATGE TOT CORRECTE	
+				return resultLocal;
+			} else {
+				//TODO CREAR MISSATGE ERROR	NO EXISTEIX			
+				return resultLocal;
+			}
 		}catch(Exception e) {
 			throw e;
 		}

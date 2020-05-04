@@ -25,7 +25,7 @@ public class UtilsLocal {
 	public Local altaLocal(Local local) throws SQLException {
 		UtilsLog log = new UtilsLog(dbLogConnection);
 		
-		if(local.loadItem())
+		if(local.loadItem(local.getCodiTipoLocal(), local.getNomLocal()))
 			return null;
 		else
 		{

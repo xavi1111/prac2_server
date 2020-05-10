@@ -38,7 +38,7 @@ public class Dispatcher {
 	}
 	
 	@WebMethod
-	public Local altaLocal(Long codiTipoLocal, Long codiCarrer, String nomCarrer, String nomVia, Long numero, String nomLocal, String observacions, String verificat, Connection eAccessibleConnection) throws Exception{
+	public Local altaLocal(Long codiTipoLocal, Long codiCarrer, String nomCarrer, String nomVia, Long numero, String nomLocal, String observacions, String verificat) throws Exception{
 		Local newLocal = new Local(eAccessibleConnection);
 		UtilsLocal utilsLocal = new UtilsLocal(eAccessibleConnection, incidenciaConnection);
 
@@ -83,7 +83,7 @@ public class Dispatcher {
 	}
 	
 	@WebMethod
-	public Local updateLocal(Long codiLocal, Long codiTipoLocal, Long codiCarrer, String nomCarrer, String nomVia, Long numero, String nomLocal, String observacions, String verificat, Connection eAccessibleConnection)throws Exception{
+	public Local updateLocal(Long codiLocal, Long codiTipoLocal, Long codiCarrer, String nomCarrer, String nomVia, Long numero, String nomLocal, String observacions, String verificat)throws Exception{
 		Local modifLocal = new Local(eAccessibleConnection);
 		UtilsLocal utilsLocal = new UtilsLocal(eAccessibleConnection, incidenciaConnection);
 		try {

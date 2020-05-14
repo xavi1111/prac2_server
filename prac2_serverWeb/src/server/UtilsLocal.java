@@ -2,6 +2,7 @@ package server;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.List;
 
 import pojo.*;
 
@@ -22,14 +23,15 @@ public class UtilsLocal {
 		this.dbLogConnection = dbLogConnection;
 	}
 	
-	public Local altaLocal(Local local) throws SQLException {
+	public Local altaLocal(Local local) throws Exception {
 		UtilsLog log = new UtilsLog(dbLogConnection);
 		
 		if(local.loadItem(local.getCodiTipoLocal(), local.getNomLocal()))
 			return null;
 		else
 		{
-			local.addItem();
+			if(!local.addItem())
+				throw new Exception();
 			local.loadItem();
 			log.registrarLog(local.getCodiLocal(), alta, nomTaula);
 			return local;
@@ -38,15 +40,11 @@ public class UtilsLocal {
 	
 	public Local modificacioLocal(Local local) throws SQLException {
 		UtilsLog log = new UtilsLog(dbLogConnection);
+		local.update();
+		local.loadItem();
+		log.registrarLog(local.getCodiLocal(), modif, nomTaula);
+		return local;
 		
-		if(!local.loadItem())
-			return null;
-		else {
-			local.update();
-			local.loadItem();
-			log.registrarLog(local.getCodiLocal(), modif, nomTaula);
-			return local;
-		}
 	}
 	
 	public boolean baixaLocal(Local local) throws SQLException {
@@ -60,4 +58,16 @@ public class UtilsLocal {
 			return true;
 		}
 	}
+	
+	/*public List<Local> getListLocals(Long codiLocal, Long codiTipoLocal, Long codiCarrer, String nomCarrer, String nomVia, Long numero, String nomLocal, String observacions, String verificat) throws SQLException{
+		Local local = new Local(dbConnection);
+		//TODO tractament de dades i llista si es nescessari
+		try {
+			return local.getList(codiLocal, codiTipoLocal, codiCarrer, nomCarrer, nomVia, numero, nomLocal, observacions, verificat);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			throw e;
+		}
+	}*/
 }

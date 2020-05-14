@@ -1,6 +1,7 @@
 package pojo;
 
 import java.sql.Statement;
+import java.util.List;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -27,7 +28,7 @@ public class Local {
 		ResultSet ors = null;
 		try {
 			Statement statement = dbConnection.createStatement();
-			ors = statement.executeQuery("SELECT * FROM local WHERE local.coditipolocal = '" + codiTipoLocal + "'"
+			ors = statement.executeQuery("SELECT * FROM eaccessible.local WHERE local.coditipolocal = '" + codiTipoLocal + "'"
 							+ "AND local.nomlocal = '" + nomLocal + "'");
 			if(ors.next()) {
 				fillObject(ors);
@@ -38,7 +39,8 @@ public class Local {
 		}catch(Exception e) {
 			//TODO a veure que fem
 			try {
-				ors.close();
+				if (ors!=null)
+					ors.close();
 			} catch (SQLException e1) {
 				e1.printStackTrace();
 			}
@@ -50,7 +52,7 @@ public class Local {
 		ResultSet ors = null;
 		try {
 			Statement statement = dbConnection.createStatement();
-			ors = statement.executeQuery("SELECT * FROM local WHERE local.codilocal = '" + codiLocal + "'");
+			ors = statement.executeQuery("SELECT * FROM eaccessible.local WHERE local.codilocal = '" + codiLocal + "'");
 			if(ors.next()) {
 				fillObject(ors);
 				ors.close();
@@ -60,7 +62,8 @@ public class Local {
 		}catch(Exception e) {
 			//TODO a veure que fem
 			try {
-				ors.close();
+				if (ors!=null)
+					ors.close();
 			} catch (SQLException e1) {
 				e1.printStackTrace();
 			}
@@ -76,9 +79,9 @@ public class Local {
 			this.nomCarrer = ors.getString("nomcarrer");
 			this.nomVia = ors.getString("nomvia");
 			this.numero = ors.getLong("numero");
-			this.nomVia = ors.getString("nomlocal");
-			this.nomVia = ors.getString("observacions");
-			this.nomVia = ors.getString("verificat");
+			this.nomLocal = ors.getString("nomlocal");
+			this.observacions = ors.getString("observacions");
+			this.verificat = ors.getString("verificat");
 		}catch(Exception e) {
 			//TODO a veure que fem
 		}
@@ -159,7 +162,7 @@ public class Local {
 	
 	public boolean addItem() {
 		try {
-			String query = "INSERT INTO local(coditipolocal, codicarrer, nomcarrer, nomvia, numero, nomlocal, observacions, verificat) VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
+			String query = "INSERT INTO eaccessible.local(coditipolocal, codicarrer, nomcarrer, nomvia, numero, nomlocal, observacions, verificat) VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
 			PreparedStatement pst = dbConnection.prepareStatement(query);
 	        pst.setLong(1, getCodiTipoLocal());
 	        pst.setLong(2, getCodiCarrer());
@@ -172,15 +175,16 @@ public class Local {
 	        pst.executeUpdate();
 			return true;
 		} catch(Exception e) {
+			e.printStackTrace();
 			return false;
 		}
 	}
 	
 	public boolean update() {
 		try {
-			String query = "UPDATE local  "
+			String query = "UPDATE eaccessible.local  "
 					+ "SET codicarrer=?, nomcarrer=?, nomvia=?, numero=?, observacions=?, verificat=?"
-					+ "WHERE local.codilocal=?";
+					+ "WHERE codilocal=?";
 			PreparedStatement pst = dbConnection.prepareStatement(query);
 		    pst.setLong(1, getCodiCarrer());
 		    pst.setString(2, getNomCarrer());
@@ -189,21 +193,40 @@ public class Local {
 	        pst.setString(5, getObservacions());
 	        pst.setString(6, getVerificat());
 	        pst.setLong(7, getCodiLocal());
-	        pst.executeUpdate();
+	        pst.execute();
 			return true;
 		} catch(Exception e) {
+			e.printStackTrace();
 			return false;
 		}
 	}
 	
 	public boolean delete() {
 		try {
-			String query = "DELETE CASCADE FROM local WHERE local.codilocal=?";
+			String query = "DELETE from eaccessible.local WHERE local.codilocal=?";
 			PreparedStatement pst = dbConnection.prepareStatement(query);
 			pst.setLong(1, getCodiLocal());
+			pst.execute();
 			return true;
 		} catch (Exception e) {
 			return false;
 		}
 	}
+
+	/*public List<Local> getList(Long codiLocal, Long codiTipoLocal, Long codiCarrer, String nomCarrer,
+			String nomVia, Long numero, String nomLocal, String observacions, String verificat) {
+		ResultSet ors = null;
+		String query = "Select * from  eaccessible.local  "
+				+ "WHERE codilocal=?";
+		PreparedStatement pst = dbConnection.prepareStatement(query);
+	    pst.setLong(1, getCodiCarrer());
+	    pst.setString(2, getNomCarrer());
+        pst.setString(3, getNomVia());
+        pst.setLong(4, getNumero());
+        pst.setString(5, getObservacions());
+        pst.setString(6, getVerificat());
+        pst.setLong(7, getCodiLocal());
+        pst.executeQuery();
+		return true;
+	}*/
 }

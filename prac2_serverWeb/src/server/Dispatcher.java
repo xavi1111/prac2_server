@@ -55,11 +55,11 @@ public class Dispatcher {
 			if(resultLocal != null) {
 				return resultLocal;
 			} else {
-				//TODO CREAR MISSATGE ERROR				
 				return resultLocal;
 			}
 			
 		}catch(Exception e) {
+			e.printStackTrace();
 			throw e;
 		}
 	}
@@ -71,10 +71,8 @@ public class Dispatcher {
 		try {
 			newLocal.setCodiLocal(codiLocal);
 			if(utilsLocal.baixaLocal(newLocal)) {
-				//TODO CREAR MISSATGE TOT CORRECTE	
 				return true;
 			} else {
-				//TODO CREAR MISSATGE ERROR				
 				return false;
 			}
 		}catch(Exception e) {
@@ -88,6 +86,7 @@ public class Dispatcher {
 		UtilsLocal utilsLocal = new UtilsLocal(eAccessibleConnection, incidenciaConnection);
 		try {
 			modifLocal.setCodiLocal(codiLocal);
+			modifLocal.loadItem();
 			modifLocal.setCodiTipoLocal(codiTipoLocal);
 			modifLocal.setCodiCarrer(codiCarrer);
 			modifLocal.setNomCarrer(nomCarrer);
@@ -98,10 +97,8 @@ public class Dispatcher {
 			modifLocal.setVerificat(verificat);
 			Local resultLocal = utilsLocal.modificacioLocal(modifLocal);
 			if(resultLocal != null) {
-				//TODO CREAR MISSATGE TOT CORRECTE	
 				return resultLocal;
 			} else {
-				//TODO CREAR MISSATGE ERROR	NO EXISTEIX			
 				return resultLocal;
 			}
 		}catch(Exception e) {
@@ -119,10 +116,8 @@ public class Dispatcher {
 			local.setVerificat("S");
 			Local resultLocal = utilsLocal.modificacioLocal(local);
 			if(resultLocal != null) {
-				//TODO CREAR MISSATGE TOT CORRECTE	
 				return resultLocal;
 			} else {
-				//TODO CREAR MISSATGE ERROR	NO EXISTEIX			
 				return resultLocal;
 			}
 		}catch(Exception e) {

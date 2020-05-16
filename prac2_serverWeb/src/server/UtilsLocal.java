@@ -2,6 +2,7 @@ package server;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import pojo.*;
@@ -59,15 +60,13 @@ public class UtilsLocal {
 		}
 	}
 	
-	/*public List<Local> getListLocals(Long codiLocal, Long codiTipoLocal, Long codiCarrer, String nomCarrer, String nomVia, Long numero, String nomLocal, String observacions, String verificat) throws SQLException{
+	public ArrayList<Local> getListLocals(Long codiLocal, Long codiTipoLocal, Long codiCarrer, String nomCarrer, String nomVia, Long numero, String nomLocal, String observacions, String verificat, Long codicaracteristica) throws SQLException{
 		Local local = new Local(dbConnection);
-		//TODO tractament de dades i llista si es nescessari
 		try {
-			return local.getList(codiLocal, codiTipoLocal, codiCarrer, nomCarrer, nomVia, numero, nomLocal, observacions, verificat);
+			return local.getList(codiLocal, codiTipoLocal, codiCarrer, nomCarrer, nomVia, numero, nomLocal, observacions, verificat, codicaracteristica);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			throw e;
 		}
-	}*/
+	}
 }

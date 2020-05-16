@@ -1,6 +1,7 @@
 package pojo;
 
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.List;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -8,15 +9,15 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class Local {
-	private Long codiLocal;
-	private Long codiTipoLocal;
-	private Long codiCarrer;
-	private String nomCarrer;
-	private String nomVia;
-	private Long numero;
-	private String nomLocal;
-	private String observacions;
-	private String verificat;
+	private Long codiLocal=0L;
+	private Long codiTipoLocal=0L;
+	private Long codiCarrer=0L;
+	private String nomCarrer="";
+	private String nomVia="";
+	private Long numero=0L;
+	private String nomLocal="";
+	private String observacions="";
+	private String verificat="";
 	private Connection dbConnection;
 	
 
@@ -73,7 +74,7 @@ public class Local {
 
 	private void fillObject(ResultSet ors) {
 		try {
-			this.codiLocal = ors.getLong("codilocal");
+			this.codiLocal = ors.getLong(1);
 			this.codiTipoLocal = ors.getLong("coditipoLocal");
 			this.codiCarrer = ors.getLong("codicarrer");
 			this.nomCarrer = ors.getString("nomcarrer");
@@ -213,20 +214,29 @@ public class Local {
 		}
 	}
 
-	/*public List<Local> getList(Long codiLocal, Long codiTipoLocal, Long codiCarrer, String nomCarrer,
-			String nomVia, Long numero, String nomLocal, String observacions, String verificat) {
+	public ArrayList<Local> getList(Long codiLocal, Long codiTipoLocal, Long codiCarrer, String nomCarrer,
+			String nomVia, Long numero, String nomLocal, String observacions, String verificat, Long codiCaracteristica) throws SQLException {
 		ResultSet ors = null;
-		String query = "Select * from  eaccessible.local  "
-				+ "WHERE codilocal=?";
+		ArrayList<Local> locals = new ArrayList<Local>();
+		String query = "select * from public.get_locals(?,?,?,?,?,?,?,?,?,?)";
 		PreparedStatement pst = dbConnection.prepareStatement(query);
-	    pst.setLong(1, getCodiCarrer());
-	    pst.setString(2, getNomCarrer());
-        pst.setString(3, getNomVia());
-        pst.setLong(4, getNumero());
-        pst.setString(5, getObservacions());
-        pst.setString(6, getVerificat());
-        pst.setLong(7, getCodiLocal());
-        pst.executeQuery();
-		return true;
-	}*/
+		pst.setLong(1, codiLocal);
+		pst.setLong(2, codiTipoLocal);
+		pst.setLong(3, codiCarrer);
+	    pst.setString(4, nomCarrer);
+        pst.setString(5, nomVia);
+        pst.setLong(6, numero);
+        pst.setString(7, nomLocal);
+        pst.setString(8, observacions);
+        pst.setString(9, verificat);
+        pst.setLong(10, codiCaracteristica);
+        
+        ors = pst.executeQuery();
+        while(ors.next()) {
+        	Local localAux = new Local(dbConnection);
+        	localAux.fillObject(ors);
+        	locals.add(localAux);
+        }
+		return locals;
+	}
 }

@@ -1,6 +1,7 @@
 package server;
 
 import java.sql.Connection;
+import java.util.ArrayList;
 
 import javax.jws.WebMethod;
 import javax.jws.WebService;
@@ -101,6 +102,17 @@ public class Dispatcher {
 			} else {
 				return resultLocal;
 			}
+		}catch(Exception e) {
+			throw e;
+		}
+	}
+	
+	@WebMethod
+	public ArrayList<Local> getListLocal(Long codiLocal, Long codiTipoLocal, Long codiCarrer, String nomCarrer, String nomVia, Long numero, String nomLocal, String observacions, String verificat, Long codicaracteristica)throws Exception{
+		UtilsLocal utilsLocal = new UtilsLocal(eAccessibleConnection, incidenciaConnection);
+		try {
+			ArrayList<Local> locals = utilsLocal.getListLocals(codiLocal, codiTipoLocal, codiCarrer, nomCarrer, nomVia, numero, nomLocal, observacions, verificat, codicaracteristica);
+			return locals;
 		}catch(Exception e) {
 			throw e;
 		}

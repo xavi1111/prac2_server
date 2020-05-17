@@ -120,15 +120,16 @@ public class Accessibilitat {
 	
 	public boolean addItem() {
 		try {
-			String query = "INSERT INTO accessibilitat(codilocal, codicaracteristica, valor, verificat) VALUES(?, ?, ?, ?)";
+			String query = "INSERT INTO eaccessible.accessibilitat(codilocal, codicaracteristica, valor, verificat) VALUES(?, ?, ?, ?)";
 			PreparedStatement pst = dbConnection.prepareStatement(query);
 	        pst.setLong(1, getCodiLocal());
 	        pst.setLong(2, getCodiCaracteristica());
 	        pst.setLong(3, getValor());
 	        pst.setString(4, getVerificat());
-	        pst.executeUpdate();
+	        pst.executeQuery();
 			return true;
 		}catch(Exception e) {
+			e.printStackTrace();
 			return false;
 		}
 	}
@@ -142,7 +143,7 @@ public class Accessibilitat {
 		    pst.setLong(1, getValor());
 		    pst.setString(2, getVerificat());
 		    pst.setLong(3, getCodiAccessibilitat());
-	        pst.executeUpdate();
+	        pst.executeQuery();
 			return true;
 		} catch(Exception e) {
 			return false;
@@ -160,10 +161,30 @@ public class Accessibilitat {
 		}
 	} 
 	
-	public List<Accessibilitat> getList(Long codiAccessibilitat, Long codiLocal, Long codiCaracteristica, Long valor,String verificat) {
+	public List<Accessibilitat> getList(Long codiAccessibilitat, Long codiLocal, Long codiCaracteristica, Long valor,String verificat) throws SQLException {
 		List<Accessibilitat> list = new ArrayList<Accessibilitat>();
-		//TODO mirar si fer-ho amb storeds o que
-		return list;
+		ResultSet ors = null;
+		try {
+			String query = "select * from public.get_accessibilitat_local(?,?,?,?,?)";
+			PreparedStatement pst = dbConnection.prepareStatement(query);
+			pst.setLong(1, codiAccessibilitat);
+			pst.setLong(2, codiLocal);
+			pst.setLong(3, codiCaracteristica);
+	        
+				pst.setLong(4, valor);
+			
+	        pst.setString(5, verificat);
+	        ors = pst.executeQuery();
+	        while(ors.next()) {
+	        	Accessibilitat accessibilitatAux = new Accessibilitat(dbConnection);
+	        	accessibilitatAux.fillObject(ors);
+	        	list.add(accessibilitatAux);
+	        }
+			return list;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw e;
+		}
 		
 	}
 }

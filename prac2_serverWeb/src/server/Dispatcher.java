@@ -2,12 +2,15 @@ package server;
 
 import java.sql.Connection;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.jws.WebMethod;
 import javax.jws.WebService;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
 
+import pojo.Accessibilitat;
+import pojo.CaracteristicaTipoLocal;
 import pojo.Local;
 
 @WebService
@@ -132,6 +135,42 @@ public class Dispatcher {
 			} else {
 				return resultLocal;
 			}
+		}catch(Exception e) {
+			throw e;
+		}
+	}
+	
+	@WebMethod
+	public Accessibilitat crearAccessibilitat(Long codiLocal, Long codiCaracteristica, Long valor, String verificat)throws Exception{
+		Accessibilitat accessibilitat = new Accessibilitat(eAccessibleConnection);
+		try {
+			accessibilitat.setCodiLocal(codiLocal);
+			accessibilitat.setCodiCaracteristica(codiCaracteristica);
+			accessibilitat.setValor(valor);
+			accessibilitat.setVerificat(verificat);
+			accessibilitat.addItem();
+			return accessibilitat;
+			
+		}catch(Exception e) {
+			throw e;
+		}
+	}
+	
+	@WebMethod
+	public List<Accessibilitat> getListAccessibilitatLocal(Long codiAccessibilitat, Long codiLocal, Long codiCaracteristica, Long valor, String verificat)throws Exception{
+		UtilsAccessibilitat utilsAccessibilitat = new UtilsAccessibilitat(eAccessibleConnection, incidenciaConnection);
+		try {
+			return utilsAccessibilitat.getListAccessibilitat(codiAccessibilitat, codiLocal, codiCaracteristica, valor, verificat);			
+		}catch(Exception e) {
+			throw e;
+		}
+	}
+	
+	@WebMethod
+	public List<CaracteristicaTipoLocal> getListCaracteristicaTipoLocal(Long codiCaracteristicaTipoLocal, Long codiCaracteristica, Long codiTipoLocal)throws Exception{
+		UtilsCaracteristicaTipoLocal utilsCaracteristicaTipoLocal = new UtilsCaracteristicaTipoLocal(eAccessibleConnection, incidenciaConnection);
+		try {
+			return utilsCaracteristicaTipoLocal.getListCaracteristicaTipoLocal(codiCaracteristicaTipoLocal, codiCaracteristica, codiTipoLocal);			
 		}catch(Exception e) {
 			throw e;
 		}

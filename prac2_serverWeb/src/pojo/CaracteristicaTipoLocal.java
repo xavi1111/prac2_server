@@ -5,6 +5,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 public class CaracteristicaTipoLocal {
 	private Long codicaracteristicatipolocal;
@@ -104,6 +106,28 @@ public class CaracteristicaTipoLocal {
 			return true;
 		}catch(Exception e) {
 			return false;
+		}
+	}
+
+	public List<CaracteristicaTipoLocal> getList(Long codiCaracteristicaTipoLocal, Long codiCaracteristica, Long codiTipoLocal) throws SQLException {
+		List<CaracteristicaTipoLocal> list = new ArrayList<CaracteristicaTipoLocal>();
+		ResultSet ors = null;
+		try {
+			String query = "select * from public.get_caracteristica_tipo_local(?,?,?)";
+			PreparedStatement pst = dbConnection.prepareStatement(query);
+			pst.setLong(1, codiCaracteristicaTipoLocal);
+			pst.setLong(2, codiCaracteristica);
+			pst.setLong(3, codiTipoLocal);
+	        ors = pst.executeQuery();
+	        while(ors.next()) {
+	        	CaracteristicaTipoLocal caracteristicaTipoLocalAux = new CaracteristicaTipoLocal(dbConnection);
+	        	caracteristicaTipoLocalAux.fillObject(ors);
+	        	list.add(caracteristicaTipoLocalAux);
+	        }
+			return list;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw e;
 		}
 	}
 	

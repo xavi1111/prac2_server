@@ -7,8 +7,13 @@ import java.util.List;
 import pojo.Accessibilitat;
 
 public class UtilsAccessibilitat {
-Connection dbConnection;
-
+	private Connection dbConnection;
+	private Connection dbLogConnection;
+	
+	public UtilsAccessibilitat(Connection dbConnection, Connection dbLogConnection) {
+		this.dbConnection = dbConnection;
+		this.dbLogConnection = dbLogConnection;
+	}
 	public List<Accessibilitat> getListAccessibilitat(Long codiAccessibilitat, Long codiLocal, Long codiCaracteristica, Long valor, String verificat) throws SQLException{
 		Accessibilitat accessibilitat = new Accessibilitat(dbConnection);
 		//TODO tractament de dades i llista si es nescessari

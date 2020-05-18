@@ -218,7 +218,7 @@ public class Local {
 			String nomVia, Long numero, String nomLocal, String observacions, String verificat, Long codiCaracteristica) throws SQLException {
 		ResultSet ors = null;
 		ArrayList<Local> locals = new ArrayList<Local>();
-		String query = "select * from eaccessible.get_locals(?,?,?,?,?,?,?,?,?,?)";
+		String query = "select * from get_locals(?,?,?,?,?,?,?,?,?,?)";
 		PreparedStatement pst = dbConnection.prepareStatement(query);
 		pst.setLong(1, codiLocal);
 		pst.setLong(2, codiTipoLocal);

@@ -22,7 +22,7 @@ public class AccessibilitatLocal {
 		this.dbConnection = dbConnection;
 	}
 	
-	public void fillObject(ResultSet ors) {
+	public void fillObject(ResultSet ors) throws Exception {
 		try {
 			this.setCodiAccessibilitat(ors.getLong("codiaccessibilitat"));
 			this.setCodiLocal(ors.getLong("codilocal"));
@@ -31,9 +31,9 @@ public class AccessibilitatLocal {
 			this.setVerificat(ors.getString("verificat"));
 			this.setNomCaracteristicaCa(ors.getString("nomcaracteristicaca"));
 			this.setNomCaracteristicaEs(ors.getString("nomcaracteristicaes"));
-			this.setNomCaracteristicaEn(ors.getString("nomcaractaresticaen"));
+			this.setNomCaracteristicaEn(ors.getString("nomcaracteristicaen"));
 		}catch(Exception e) {
-			//TODO a veure que fem
+			throw e;
 		}
 	}
 

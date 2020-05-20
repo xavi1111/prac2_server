@@ -35,7 +35,7 @@ public class UtilsLocal {
 				throw new Exception();
 			local.loadItem(local.getCodiTipoLocal(), local.getNomLocal());
 			log.registrarLog(local.getCodiLocal(), alta, nomTaula);
-			return local;
+			return local;    
 		}
 	}
 	

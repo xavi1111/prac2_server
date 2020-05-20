@@ -9,8 +9,12 @@ import javax.jws.WebMethod;
 import javax.jws.WebService;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
+import javax.sql.rowset.WebRowSet;
+
+import com.sun.rowset.WebRowSetImpl;
 
 import pojo.Accessibilitat;
+import pojo.AccessibilitatLocal;
 import pojo.CaracteristicaTipoLocal;
 import pojo.Local;
 
@@ -158,10 +162,19 @@ public class Dispatcher {
 	}
 	
 	@WebMethod
-	public ResultSet getListAccessibilitatLocal(Long codiAccessibilitat, Long codiLocal, Long codiCaracteristica, Long valor, String verificat)throws Exception{
+	public ArrayList<AccessibilitatLocal> getListAccessibilitatLocal(Long codiAccessibilitat, Long codiLocal, Long codiCaracteristica,String verificat)throws Exception{
 		UtilsAccessibilitat utilsAccessibilitat = new UtilsAccessibilitat(eAccessibleConnection, incidenciaConnection);
+		ArrayList<AccessibilitatLocal> accessibilitatLocal= new ArrayList<AccessibilitatLocal>(); 
+		ResultSet ors = null;
+		
 		try {
-			return utilsAccessibilitat.getListAccessibilitat(codiAccessibilitat, codiLocal, codiCaracteristica, valor, verificat);			
+			ors = utilsAccessibilitat.getListAccessibilitat(codiAccessibilitat, codiLocal, codiCaracteristica, verificat);
+			while(ors.next()) {
+				AccessibilitatLocal accessibilitatLocalAux = new AccessibilitatLocal(eAccessibleConnection);
+				accessibilitatLocalAux.fillObject(ors);
+				accessibilitatLocal.add(accessibilitatLocalAux);
+			}
+			return accessibilitatLocal;
 		}catch(Exception e) {
 			throw e;
 		}

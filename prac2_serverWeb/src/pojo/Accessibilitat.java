@@ -161,17 +161,14 @@ public class Accessibilitat {
 		}
 	} 
 	
-	public ResultSet getList(Long codiAccessibilitat, Long codiLocal, Long codiCaracteristica, Long valor,String verificat) throws SQLException {
+	public ResultSet getList(Long codiAccessibilitat, Long codiLocal, Long codiCaracteristica, String verificat) throws SQLException {
 		try {
-			String query = "select * from public.get_accessibilitat_local(?,?,?,?,?)";
+			String query = "select * from public.get_accessibilitat_local(?,?,?,?)";
 			PreparedStatement pst = dbConnection.prepareStatement(query);
 			pst.setLong(1, codiAccessibilitat);
 			pst.setLong(2, codiLocal);
 			pst.setLong(3, codiCaracteristica);
-	        
-				pst.setLong(4, valor);
-			
-	        pst.setString(5, verificat);
+	        pst.setString(4, verificat);
 	        return pst.executeQuery();
 		} catch (SQLException e) {
 			e.printStackTrace();

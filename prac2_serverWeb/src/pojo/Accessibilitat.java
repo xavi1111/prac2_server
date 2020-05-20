@@ -161,9 +161,7 @@ public class Accessibilitat {
 		}
 	} 
 	
-	public List<Accessibilitat> getList(Long codiAccessibilitat, Long codiLocal, Long codiCaracteristica, Long valor,String verificat) throws SQLException {
-		List<Accessibilitat> list = new ArrayList<Accessibilitat>();
-		ResultSet ors = null;
+	public ResultSet getList(Long codiAccessibilitat, Long codiLocal, Long codiCaracteristica, Long valor,String verificat) throws SQLException {
 		try {
 			String query = "select * from public.get_accessibilitat_local(?,?,?,?,?)";
 			PreparedStatement pst = dbConnection.prepareStatement(query);
@@ -174,13 +172,7 @@ public class Accessibilitat {
 				pst.setLong(4, valor);
 			
 	        pst.setString(5, verificat);
-	        ors = pst.executeQuery();
-	        while(ors.next()) {
-	        	Accessibilitat accessibilitatAux = new Accessibilitat(dbConnection);
-	        	accessibilitatAux.fillObject(ors);
-	        	list.add(accessibilitatAux);
-	        }
-			return list;
+	        return pst.executeQuery();
 		} catch (SQLException e) {
 			e.printStackTrace();
 			throw e;

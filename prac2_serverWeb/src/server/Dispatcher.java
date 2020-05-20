@@ -1,6 +1,7 @@
 package server;
 
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -157,7 +158,7 @@ public class Dispatcher {
 	}
 	
 	@WebMethod
-	public List<Accessibilitat> getListAccessibilitatLocal(Long codiAccessibilitat, Long codiLocal, Long codiCaracteristica, Long valor, String verificat)throws Exception{
+	public ResultSet getListAccessibilitatLocal(Long codiAccessibilitat, Long codiLocal, Long codiCaracteristica, Long valor, String verificat)throws Exception{
 		UtilsAccessibilitat utilsAccessibilitat = new UtilsAccessibilitat(eAccessibleConnection, incidenciaConnection);
 		try {
 			return utilsAccessibilitat.getListAccessibilitat(codiAccessibilitat, codiLocal, codiCaracteristica, valor, verificat);			

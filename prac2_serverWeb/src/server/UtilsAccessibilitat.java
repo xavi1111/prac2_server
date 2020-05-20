@@ -1,6 +1,7 @@
 package server;
 
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -14,7 +15,7 @@ public class UtilsAccessibilitat {
 		this.dbConnection = dbConnection;
 		this.dbLogConnection = dbLogConnection;
 	}
-	public List<Accessibilitat> getListAccessibilitat(Long codiAccessibilitat, Long codiLocal, Long codiCaracteristica, Long valor, String verificat) throws SQLException{
+	public ResultSet getListAccessibilitat(Long codiAccessibilitat, Long codiLocal, Long codiCaracteristica, Long valor, String verificat) throws SQLException{
 		Accessibilitat accessibilitat = new Accessibilitat(dbConnection);
 		//TODO tractament de dades i llista si es nescessari
 		try {

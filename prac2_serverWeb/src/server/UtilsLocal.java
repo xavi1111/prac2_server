@@ -33,7 +33,7 @@ public class UtilsLocal {
 		{
 			if(!local.addItem())
 				throw new Exception();
-			local.loadItem();
+			local.loadItem(local.getCodiTipoLocal(), local.getNomLocal());
 			log.registrarLog(local.getCodiLocal(), alta, nomTaula);
 			return local;
 		}

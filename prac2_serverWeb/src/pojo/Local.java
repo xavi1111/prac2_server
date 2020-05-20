@@ -74,7 +74,7 @@ public class Local {
 
 	private void fillObject(ResultSet ors) {
 		try {
-			this.codiLocal = ors.getLong(1);
+			this.codiLocal = ors.getLong("codilocal");
 			this.codiTipoLocal = ors.getLong("coditipoLocal");
 			this.codiCarrer = ors.getLong("codicarrer");
 			this.nomCarrer = ors.getString("nomcarrer");

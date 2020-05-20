@@ -61,11 +61,9 @@ public class Dispatcher {
 			newLocal.setObservacions(observacions);
 			newLocal.setVerificat(verificat);
 			Local resultLocal = utilsLocal.altaLocal(newLocal);
-			if(resultLocal != null) {
-				return resultLocal;
-			} else {
-				return resultLocal;
-			}
+			
+			return resultLocal;
+			
 			
 		}catch(Exception e) {
 			e.printStackTrace();

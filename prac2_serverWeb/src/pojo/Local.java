@@ -25,7 +25,7 @@ public class Local {
 		this.dbConnection = dbConnection;
 	}
 	
-	public Boolean loadItem(Long codiTipoLocal, String nomLocal) {
+	public Boolean loadItem(Long codiTipoLocal, String nomLocal) throws SQLException {
 		ResultSet ors = null;
 		try {
 			Statement statement = dbConnection.createStatement();
@@ -38,18 +38,18 @@ public class Local {
 			}else
 				return false;
 		}catch(Exception e) {
-			//TODO a veure que fem
 			try {
 				if (ors!=null)
 					ors.close();
 			} catch (SQLException e1) {
 				e1.printStackTrace();
+				throw e1;
 			}
 			return false;
 		}
 	}
 	
-	public Boolean loadItem() {
+	public Boolean loadItem() throws SQLException {
 		ResultSet ors = null;
 		try {
 			Statement statement = dbConnection.createStatement();
@@ -61,18 +61,18 @@ public class Local {
 			}else
 				return false;
 		}catch(Exception e) {
-			//TODO a veure que fem
 			try {
 				if (ors!=null)
 					ors.close();
 			} catch (SQLException e1) {
 				e1.printStackTrace();
+				throw e1;
 			}
 			return false;
 		}
 	}
 
-	private void fillObject(ResultSet ors) {
+	private void fillObject(ResultSet ors) throws Exception {
 		try {
 			this.codiLocal = ors.getLong("codilocal");
 			this.codiTipoLocal = ors.getLong("coditipoLocal");
@@ -84,7 +84,7 @@ public class Local {
 			this.observacions = ors.getString("observacions");
 			this.verificat = ors.getString("verificat");
 		}catch(Exception e) {
-			//TODO a veure que fem
+			throw e;
 		}
 	}
 
@@ -215,28 +215,41 @@ public class Local {
 	}
 
 	public ArrayList<Local> getList(Long codiLocal, Long codiTipoLocal, Long codiCarrer, String nomCarrer,
-			String nomVia, Long numero, String nomLocal, String observacions, String verificat, Long codiCaracteristica) throws SQLException {
+			String nomVia, Long numero, String nomLocal, String observacions, String verificat, Long codiCaracteristica) throws Exception {
 		ResultSet ors = null;
 		ArrayList<Local> locals = new ArrayList<Local>();
-		String query = "select * from public.get_locals(?,?,?,?,?,?,?,?,?,?)";
-		PreparedStatement pst = dbConnection.prepareStatement(query);
-		pst.setLong(1, codiLocal);
-		pst.setLong(2, codiTipoLocal);
-		pst.setLong(3, codiCarrer);
-	    pst.setString(4, nomCarrer);
-        pst.setString(5, nomVia);
-        pst.setLong(6, numero);
-        pst.setString(7, nomLocal);
-        pst.setString(8, observacions);
-        pst.setString(9, verificat);
-        pst.setLong(10, codiCaracteristica);
-        
-        ors = pst.executeQuery();
-        while(ors.next()) {
-        	Local localAux = new Local(dbConnection);
-        	localAux.fillObject(ors);
-        	locals.add(localAux);
-        }
+		try {
+			String query = "select * from public.get_locals(?,?,?,?,?,?,?,?,?,?)";
+			PreparedStatement pst = dbConnection.prepareStatement(query);
+			pst.setLong(1, codiLocal);
+			pst.setLong(2, codiTipoLocal);
+			pst.setLong(3, codiCarrer);
+		    pst.setString(4, nomCarrer);
+	        pst.setString(5, nomVia);
+	        pst.setLong(6, numero);
+	        pst.setString(7, nomLocal);
+	        pst.setString(8, observacions);
+	        pst.setString(9, verificat);
+	        pst.setLong(10, codiCaracteristica);
+	        
+	        ors = pst.executeQuery();
+	        while(ors.next()) {
+	        	Local localAux = new Local(dbConnection);
+	        	localAux.fillObject(ors);
+	        	locals.add(localAux);
+	        }
+		}catch(Exception e) {
+			throw e;
+		}
+		finally {
+			try {
+				if (ors!=null)
+					ors.close();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+				throw e1;
+			}
+		}
 		return locals;
 	}
 }

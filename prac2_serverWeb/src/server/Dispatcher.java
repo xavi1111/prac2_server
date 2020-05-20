@@ -75,8 +75,17 @@ public class Dispatcher {
 	public boolean baixaLocal(Long codiLocal)throws Exception{
 		Local newLocal = new Local(eAccessibleConnection);
 		UtilsLocal utilsLocal = new UtilsLocal(eAccessibleConnection, incidenciaConnection);
+		UtilsLog log = new UtilsLog(incidenciaConnection);
 		try {
 			newLocal.setCodiLocal(codiLocal);
+			ArrayList<AccessibilitatLocal> accessibilitatLocal = getListAccessibilitatLocal(0L, codiLocal, 0L, "");
+			for(AccessibilitatLocal accessibilitat : accessibilitatLocal) {
+				Accessibilitat aux = new Accessibilitat(eAccessibleConnection);
+				aux.loadItem(accessibilitat.getCodiLocal(), accessibilitat.getCodiAccessibilitat());
+				log.registrarLog(aux.getCodiAccessibilitat(), 3, "Accessibilitat");
+				aux.delete();
+				
+			}
 			if(utilsLocal.baixaLocal(newLocal)) {
 				return true;
 			} else {
@@ -128,11 +137,22 @@ public class Dispatcher {
 	public Local verificarLocal(Long codiLocal)throws Exception{
 		Local local = new Local(eAccessibleConnection);
 		UtilsLocal utilsLocal = new UtilsLocal(eAccessibleConnection, incidenciaConnection);
+		UtilsLog log = new UtilsLog(incidenciaConnection);
 		try {
 			local.setCodiLocal(codiLocal);
+			ArrayList<AccessibilitatLocal> accessibilitatLocal = getListAccessibilitatLocal(0L, codiLocal, 0L, "");
+			for(AccessibilitatLocal accessibilitat : accessibilitatLocal) {
+				Accessibilitat aux = new Accessibilitat(eAccessibleConnection);
+				aux.loadItem(accessibilitat.getCodiLocal(), accessibilitat.getCodiAccessibilitat());
+				aux.setVerificat("S");
+				aux.update();
+				log.registrarLog(aux.getCodiAccessibilitat(), 4, "Accessibilitat");
+			}
 			local.loadItem();
 			local.setVerificat("S");
 			Local resultLocal = utilsLocal.modificacioLocal(local);
+			log.registrarLog(local.getCodiLocal(), 4, "Local");
+			
 			if(resultLocal != null) {
 				return resultLocal;
 			} else {
@@ -146,12 +166,15 @@ public class Dispatcher {
 	@WebMethod
 	public Accessibilitat crearAccessibilitat(Long codiLocal, Long codiCaracteristica, Long valor, String verificat)throws Exception{
 		Accessibilitat accessibilitat = new Accessibilitat(eAccessibleConnection);
+		UtilsLog log = new UtilsLog(incidenciaConnection);
 		try {
 			accessibilitat.setCodiLocal(codiLocal);
 			accessibilitat.setCodiCaracteristica(codiCaracteristica);
 			accessibilitat.setValor(valor);
 			accessibilitat.setVerificat(verificat);
 			accessibilitat.addItem();
+			accessibilitat.loadItem(accessibilitat.getCodiLocal(), accessibilitat.getCodiCaracteristica());
+			log.registrarLog(accessibilitat.getCodiAccessibilitat(), 4, "Accessibilitat");
 			return accessibilitat;
 			
 		}catch(Exception e) {

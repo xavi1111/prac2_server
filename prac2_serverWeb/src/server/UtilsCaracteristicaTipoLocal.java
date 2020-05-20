@@ -14,7 +14,7 @@ public class UtilsCaracteristicaTipoLocal {
 		this.dbConnection = dbConnection;
 		this.dbLogConnection = dbLogConnection;
 	}
-	public List<CaracteristicaTipoLocal> getListCaracteristicaTipoLocal(Long codiCaracteristicaTipoLocal, Long codiCaracteristica, Long codiTipoLocal) throws SQLException{
+	public List<CaracteristicaTipoLocal> getListCaracteristicaTipoLocal(Long codiCaracteristicaTipoLocal, Long codiCaracteristica, Long codiTipoLocal) throws Exception{
 		CaracteristicaTipoLocal caracteristicaTipoLocal = new CaracteristicaTipoLocal(dbConnection);
 		try {
 			return caracteristicaTipoLocal.getList(codiCaracteristicaTipoLocal, codiCaracteristica, codiTipoLocal);

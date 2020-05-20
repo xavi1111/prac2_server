@@ -33,7 +33,6 @@ public class Caracteristica {
 			}else
 				return false;
 		}catch(Exception e) {
-			//TODO a veure que fem
 			try {
 				ors.close();
 			} catch (SQLException e1) {
@@ -55,7 +54,6 @@ public class Caracteristica {
 			}else
 				return false;
 		}catch(Exception e) {
-			//TODO a veure que fem
 			try {
 				ors.close();
 			} catch (SQLException e1) {
@@ -65,7 +63,7 @@ public class Caracteristica {
 		}
 	}
 	
-	private void fillObject(ResultSet ors) {
+	private void fillObject(ResultSet ors) throws Exception {
 		try {
 			this.codiCaracteristica = ors.getLong("codicaracteristica");
 			this.nomCaracteristicaCA = ors.getString("nomcaracteristicaca");
@@ -74,7 +72,7 @@ public class Caracteristica {
 			this.tipo = ors.getInt("tipo");
 			this.codiNivell = ors.getLong("codinivell");
 		}catch(Exception e) {
-			//TODO a veure que fem
+			throw e;
 		}
 	}
 	

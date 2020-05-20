@@ -17,6 +17,7 @@ public class UtilsLocal {
 	private Integer alta = 1;
 	private Integer modif = 2;
 	private Integer baixa = 3;
+	private Integer verificar= 4;
 	private String nomTaula = "Local";
 	
 	public UtilsLocal(Connection dbConnection, Connection dbLogConnection) {
@@ -60,7 +61,7 @@ public class UtilsLocal {
 		}
 	}
 	
-	public ArrayList<Local> getListLocals(Long codiLocal, Long codiTipoLocal, Long codiCarrer, String nomCarrer, String nomVia, Long numero, String nomLocal, String observacions, String verificat, Long codicaracteristica) throws SQLException{
+	public ArrayList<Local> getListLocals(Long codiLocal, Long codiTipoLocal, Long codiCarrer, String nomCarrer, String nomVia, Long numero, String nomLocal, String observacions, String verificat, Long codicaracteristica) throws Exception{
 		Local local = new Local(dbConnection);
 		try {
 			return local.getList(codiLocal, codiTipoLocal, codiCarrer, nomCarrer, nomVia, numero, nomLocal, observacions, verificat, codicaracteristica);

@@ -122,13 +122,13 @@ public class Incidencia {
 	
 	public boolean addItem() {
 		try {
-			String query = "INSERT INTO incidencia(dataHora, codiTipusIncidencia, idRegistre, nomTaula) VALUES(?, ?, ?, ?)";
+			String query = "INSERT INTO log.incidencia(dataHora, codiTipusIncidencia, idRegistre, nomTaula) VALUES(?, ?, ?, ?)";
 			PreparedStatement pst = dbConnection.prepareStatement(query);
 	        pst.setTimestamp(1, getDataHora());
 	        pst.setLong(2, getCodiTipusIncidencia());
 	        pst.setLong(3, getIdRegistre());
 	        pst.setString(4, getNomTaula());
-	        pst.executeUpdate();
+	        pst.executeQuery();
 			return true;
 		}catch(Exception e) {
 			return false;

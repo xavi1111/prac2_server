@@ -34,7 +34,6 @@ public class Accessibilitat {
 			}else
 				return false;
 		}catch(Exception e) {
-			//TODO a veure que fem
 			try {
 				ors.close();
 			} catch (SQLException e1) {
@@ -56,7 +55,6 @@ public class Accessibilitat {
 			}else
 				return false;
 		}catch(Exception e) {
-			//TODO a veure que fem
 			try {
 				ors.close();
 			} catch (SQLException e1) {
@@ -66,7 +64,7 @@ public class Accessibilitat {
 		}
 	}
 	
-	private void fillObject(ResultSet ors) {
+	private void fillObject(ResultSet ors) throws Exception {
 		try {
 			this.codiAccessibilitat = ors.getLong("codiaccessibilitat");
 			this.codiLocal = ors.getLong("codilocal");
@@ -74,7 +72,7 @@ public class Accessibilitat {
 			this.valor = ors.getLong("valor");
 			this.verificat = ors.getString("verificat");
 		}catch(Exception e) {
-			//TODO a veure que fem
+			throw e;
 		}
 	}
 	
@@ -136,7 +134,7 @@ public class Accessibilitat {
 	
 	public boolean update() {
 		try {
-			String query = "UPDATE accessibilitat  "
+			String query = "UPDATE eaccessible.accessibilitat  "
 					+ "SET valor=?, verificat=?"
 					+ "WHERE acessibilitat.codiaccessibilitat=? ";
 			PreparedStatement pst = dbConnection.prepareStatement(query);
@@ -152,9 +150,10 @@ public class Accessibilitat {
 	
 	public boolean delete() {
 		try {
-			String query = "DELETE FROM accessibilitat WHERE local.codiaccessibilitat=?";
+			String query = "DELETE FROM eaccessible.accessibilitat WHERE local.codiaccessibilitat=?";
 			PreparedStatement pst = dbConnection.prepareStatement(query);
 			pst.setLong(1, getCodiAccessibilitat());
+			pst.executeQuery();
 			return true;
 		} catch (Exception e) {
 			return false;

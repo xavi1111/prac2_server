@@ -30,7 +30,6 @@ public class CaracteristicaTipoLocal {
 			}else
 				return false;
 		}catch(Exception e) {
-			//TODO a veure que fem
 			try {
 				ors.close();
 			} catch (SQLException e1) {
@@ -52,7 +51,6 @@ public class CaracteristicaTipoLocal {
 			}else
 				return false;
 		}catch(Exception e) {
-			//TODO a veure que fem
 			try {
 				ors.close();
 			} catch (SQLException e1) {
@@ -62,13 +60,13 @@ public class CaracteristicaTipoLocal {
 		}
 	}
 	
-	private void fillObject(ResultSet ors) {
+	private void fillObject(ResultSet ors) throws Exception {
 		try {
 			this.codicaracteristicatipolocal = ors.getLong("codicaracteristicatipolocal");
 			this.codicaracteristica = ors.getLong("codicaracteristica");
 			this.coditipolocal = ors.getLong("coditipolocal");
 		}catch(Exception e) {
-			//TODO a veure que fem
+			throw e;
 		}
 	}
 	
@@ -109,7 +107,7 @@ public class CaracteristicaTipoLocal {
 		}
 	}
 
-	public List<CaracteristicaTipoLocal> getList(Long codiCaracteristicaTipoLocal, Long codiCaracteristica, Long codiTipoLocal) throws SQLException {
+	public List<CaracteristicaTipoLocal> getList(Long codiCaracteristicaTipoLocal, Long codiCaracteristica, Long codiTipoLocal) throws Exception {
 		List<CaracteristicaTipoLocal> list = new ArrayList<CaracteristicaTipoLocal>();
 		ResultSet ors = null;
 		try {
@@ -125,7 +123,7 @@ public class CaracteristicaTipoLocal {
 	        	list.add(caracteristicaTipoLocalAux);
 	        }
 			return list;
-		} catch (SQLException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			throw e;
 		}

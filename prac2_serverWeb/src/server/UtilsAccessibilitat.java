@@ -17,11 +17,9 @@ public class UtilsAccessibilitat {
 	}
 	public ResultSet getListAccessibilitat(Long codiAccessibilitat, Long codiLocal, Long codiCaracteristica, String verificat) throws SQLException{
 		Accessibilitat accessibilitat = new Accessibilitat(dbConnection);
-		//TODO tractament de dades i llista si es nescessari
 		try {
 			return accessibilitat.getList(codiAccessibilitat, codiLocal, codiCaracteristica, verificat);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			throw e;
 		}

@@ -38,7 +38,7 @@ public class Dispatcher {
 				if ( dsIncidencia == null ) throw new Exception();
 				else
 				{
-					incidenciaConnection = dsEAccessible.getConnection();
+					incidenciaConnection = dsIncidencia.getConnection();
 				}
 			}
 		}catch(Exception e) {
@@ -92,6 +92,7 @@ public class Dispatcher {
 				return false;
 			}
 		}catch(Exception e) {
+			e.printStackTrace();
 			throw e;
 		}
 	}
@@ -159,6 +160,7 @@ public class Dispatcher {
 				return resultLocal;
 			}
 		}catch(Exception e) {
+			e.printStackTrace();
 			throw e;
 		}
 	}

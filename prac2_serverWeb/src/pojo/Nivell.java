@@ -24,14 +24,16 @@ public class Nivell {
 			ors = statement.executeQuery("SELECT * FROM Nivell WHERE nivell.nomnivellca = '" + nomNivellCA + "'");
 			if(ors.next()) {
 				fillObject(ors);
-				ors.close();
+				if(ors!=null)
+					ors.close();
 				return true;
 			}else
 				return false;
 		}catch(Exception e) {
 			//TODO a veure que fem
 			try {
-				ors.close();
+				if(ors!=null)
+					ors.close();
 			} catch (SQLException e1) {
 				e1.printStackTrace();
 			}
@@ -46,14 +48,16 @@ public class Nivell {
 			ors = statement.executeQuery("SELECT * FROM Nivell WHERE nivell.codinivell = '" + codiNivell + "'");
 			if(ors.next()) {
 				fillObject(ors);
-				ors.close();
+				if(ors!=null)
+					ors.close();
 				return true;
 			}else
 				return false;
 		}catch(Exception e) {
 			//TODO a veure que fem
 			try {
-				ors.close();
+				if(ors!=null)
+					ors.close();
 			} catch (SQLException e1) {
 				e1.printStackTrace();
 			}

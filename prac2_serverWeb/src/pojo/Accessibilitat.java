@@ -26,15 +26,17 @@ public class Accessibilitat {
 		ResultSet ors = null;
 		try {
 			Statement statement = dbConnection.createStatement();
-			ors = statement.executeQuery("SELECT * FROM accessibilitat WHERE accessibilitat.codilocal = '" + codiLocal + "' AND accessibilitat.codiaccessibilitat = '" + codiAccessibilitat + "'");
+			ors = statement.executeQuery("SELECT * FROM eaccessible.accessibilitat WHERE accessibilitat.codilocal = '" + codiLocal + "' AND accessibilitat.codiaccessibilitat = '" + codiAccessibilitat + "'");
 			if(ors.next()) {
 				fillObject(ors);
-				ors.close();
+				if(ors!=null)
+					ors.close();
 				return true;
 			}else
 				return false;
 		}catch(Exception e) {
 			try {
+				if(ors!=null)
 				ors.close();
 			} catch (SQLException e1) {
 				e1.printStackTrace();
@@ -47,15 +49,17 @@ public class Accessibilitat {
 		ResultSet ors = null;
 		try {
 			Statement statement = dbConnection.createStatement();
-			ors = statement.executeQuery("SELECT * FROM accessibilitat WHERE accessibilitat.codiaccessibilitat = '" + codiAccessibilitat + "'");
+			ors = statement.executeQuery("SELECT * FROM eaccessible.accessibilitat WHERE accessibilitat.codiaccessibilitat = '" + codiAccessibilitat + "'");
 			if(ors.next()) {
 				fillObject(ors);
+				if(ors!=null)
 				ors.close();
 				return true;
 			}else
 				return false;
 		}catch(Exception e) {
 			try {
+				if(ors!=null)
 				ors.close();
 			} catch (SQLException e1) {
 				e1.printStackTrace();
@@ -136,7 +140,7 @@ public class Accessibilitat {
 		try {
 			String query = "UPDATE eaccessible.accessibilitat  "
 					+ "SET valor=?, verificat=?"
-					+ "WHERE acessibilitat.codiaccessibilitat=? ";
+					+ "WHERE eaccessible.accessibilitat.codiaccessibilitat=? ";
 			PreparedStatement pst = dbConnection.prepareStatement(query);
 		    pst.setLong(1, getValor());
 		    pst.setString(2, getVerificat());
@@ -144,13 +148,14 @@ public class Accessibilitat {
 	        pst.executeQuery();
 			return true;
 		} catch(Exception e) {
+			e.printStackTrace();
 			return false;
 		}
 	}
 	
 	public boolean delete() {
 		try {
-			String query = "DELETE FROM eaccessible.accessibilitat WHERE local.codiaccessibilitat=?";
+			String query = "DELETE FROM eaccessible.accessibilitat WHERE accessibilitat.codiaccessibilitat=?";
 			PreparedStatement pst = dbConnection.prepareStatement(query);
 			pst.setLong(1, getCodiAccessibilitat());
 			pst.executeQuery();

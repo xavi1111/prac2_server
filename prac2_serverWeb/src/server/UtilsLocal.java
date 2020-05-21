@@ -49,14 +49,11 @@ public class UtilsLocal {
 		
 	}
 	
-	public boolean baixaLocal(Local local) throws SQLException {
-		UtilsLog log = new UtilsLog(dbLogConnection);
-		
+	public boolean baixaLocal(Local local) throws SQLException {		
 		if(!local.loadItem())
 			return false;
 		else {
 			local.delete();
-			log.registrarLog(null, baixa, nomTaula);
 			return true;
 		}
 	}

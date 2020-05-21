@@ -31,14 +31,16 @@ public class Incidencia {
 					+ "AND incidencia.nomTaula = '" + nomTaula + "'");
 			if(ors.next()) {
 				fillObject(ors);
-				ors.close();
+				if(ors!=null)
+					ors.close();
 				return true;
 			}else
 				return false;
 		}catch(Exception e) {
 			//TODO a veure que fem
 			try {
-				ors.close();
+				if(ors!=null)
+					ors.close();
 			} catch (SQLException e1) {
 				e1.printStackTrace();
 			}
@@ -53,14 +55,16 @@ public class Incidencia {
 			ors = statement.executeQuery("SELECT * FROM incidencia WHERE incidencia.idIncidencia = '" + idIncidencia + "'");
 			if(ors.next()) {
 				fillObject(ors);
-				ors.close();
+				if(ors!=null)
+					ors.close();
 				return true;
 			}else
 				return false;
 		}catch(Exception e) {
 			//TODO a veure que fem
 			try {
-				ors.close();
+				if(ors!=null)
+					ors.close();
 			} catch (SQLException e1) {
 				e1.printStackTrace();
 			}
@@ -131,6 +135,7 @@ public class Incidencia {
 	        pst.executeQuery();
 			return true;
 		}catch(Exception e) {
+			e.printStackTrace();
 			return false;
 		}
 	}

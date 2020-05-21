@@ -28,13 +28,15 @@ public class Caracteristica {
 			ors = statement.executeQuery("SELECT * FROM accessibilitat WHERE caracteristica.nomcaracteristicaca = '" + nomCaracteristicaCA + "'");
 			if(ors.next()) {
 				fillObject(ors);
-				ors.close();
+				if(ors!=null)
+					ors.close();
 				return true;
 			}else
 				return false;
 		}catch(Exception e) {
 			try {
-				ors.close();
+				if(ors!=null)
+					ors.close();
 			} catch (SQLException e1) {
 				e1.printStackTrace();
 			}
@@ -49,13 +51,15 @@ public class Caracteristica {
 			ors = statement.executeQuery("SELECT * FROM accessibilitat WHERE caracteristica.codicaracteristica = '" + codiCaracteristica + "'");
 			if(ors.next()) {
 				fillObject(ors);
-				ors.close();
+				if(ors!=null)
+					ors.close();
 				return true;
 			}else
 				return false;
 		}catch(Exception e) {
 			try {
-				ors.close();
+				if(ors!=null)
+					ors.close();
 			} catch (SQLException e1) {
 				e1.printStackTrace();
 			}

@@ -33,7 +33,8 @@ public class Local {
 							+ "AND local.nomlocal = '" + nomLocal + "'");
 			if(ors.next()) {
 				fillObject(ors);
-				ors.close();
+				if(ors!=null)
+					ors.close();
 				return true;
 			}else
 				return false;
@@ -56,7 +57,8 @@ public class Local {
 			ors = statement.executeQuery("SELECT * FROM eaccessible.local WHERE local.codilocal = '" + codiLocal + "'");
 			if(ors.next()) {
 				fillObject(ors);
-				ors.close();
+				if(ors!=null)
+					ors.close();
 				return true;
 			}else
 				return false;

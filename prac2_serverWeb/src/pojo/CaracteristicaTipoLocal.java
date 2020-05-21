@@ -25,13 +25,15 @@ public class CaracteristicaTipoLocal {
 			ors = statement.executeQuery("SELECT * FROM caracteristicatipolocal WHERE caracteristicatipolocal.codicaracteristica = '" + codicaracteristica + "' AND caracteristicatipolocal.coditipolocal = '" + coditipolocal + "'");
 			if(ors.next()) {
 				fillObject(ors);
-				ors.close();
+				if(ors!=null)
+					ors.close();
 				return true;
 			}else
 				return false;
 		}catch(Exception e) {
 			try {
-				ors.close();
+				if(ors!=null)
+					ors.close();
 			} catch (SQLException e1) {
 				e1.printStackTrace();
 			}
@@ -46,13 +48,15 @@ public class CaracteristicaTipoLocal {
 			ors = statement.executeQuery("select * from caracteristicatipolocal where caracteristicatipolocal.codicaracteristicatipolocal = '" + codicaracteristicatipolocal + "'");
 			if(ors.next()) {
 				fillObject(ors);
-				ors.close();
+				if(ors!=null)
+					ors.close();
 				return true;
 			}else
 				return false;
 		}catch(Exception e) {
 			try {
-				ors.close();
+				if(ors!=null)
+					ors.close();
 			} catch (SQLException e1) {
 				e1.printStackTrace();
 			}

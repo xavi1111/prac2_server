@@ -33,7 +33,7 @@ public class AccessibilitatLocal {
 			this.setNomCaracteristicaCa(ors.getString("nomcaracteristicaca"));
 			this.setNomCaracteristicaEs(ors.getString("nomcaracteristicaes"));
 			this.setNomCaracteristicaEn(ors.getString("nomcaracteristicaen"));
-			this.setTipusCaracteristica(ors.getInt("tipusCaracteristica"));
+			this.setTipusCaracteristica(ors.getInt("tipo"));
 		}catch(Exception e) {
 			throw e;
 		}

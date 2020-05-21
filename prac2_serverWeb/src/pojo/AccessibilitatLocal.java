@@ -15,7 +15,7 @@ public class AccessibilitatLocal {
 	private String nomCaracteristicaCa;
 	private String nomCaracteristicaEs;
 	private String nomCaracteristicaEn;
-	private Integer tipo;
+	private Integer tipusCaracteristica;
 	
 	private Connection dbConnection;
 	
@@ -33,7 +33,7 @@ public class AccessibilitatLocal {
 			this.setNomCaracteristicaCa(ors.getString("nomcaracteristicaca"));
 			this.setNomCaracteristicaEs(ors.getString("nomcaracteristicaes"));
 			this.setNomCaracteristicaEn(ors.getString("nomcaracteristicaen"));
-			this.setTipo(ors.getInt("tipo"));
+			this.setTipusCaracteristica(ors.getInt("tipusCaracteristica"));
 		}catch(Exception e) {
 			throw e;
 		}
@@ -103,11 +103,11 @@ public class AccessibilitatLocal {
 		this.nomCaracteristicaEn = nomCaracteristicaEn;
 	}
 
-	public Integer getTipo() {
-		return tipo;
+	public Integer getTipusCaracteristica() {
+		return tipusCaracteristica;
 	}
 
-	public void setTipo(Integer tipo) {
-		this.tipo = tipo;
+	public void setTipusCaracteristica(Integer tipusCaracteristica) {
+		this.tipusCaracteristica = tipusCaracteristica;
 	}
 }
